@@ -2,6 +2,7 @@
     <div id="app" class="app">
         <generator
             :quote-obj="currentQuote"
+            :tweet-url="tweetUrl"
             :next-quote="nextQuote"
             :next-photo="nextPhoto"
         ></generator>
@@ -56,8 +57,12 @@ export default {
             const nextUrl = this.photos[this.photoIndex + 1].urls.full
             this.preload(nextUrl)
         },
-        encodeQuote (quote) {
-
+        encodeQuote (text, name) {
+            // Truncate text if it's too long for the tweet
+            const truncText = text.length > 100 ? text.substr(0, 50) + '...”' : text
+            const encText = encodeURIComponent(truncText).replace(/%26%238217%3B/g, '%27').replace(/%26%238220%3B/g, '%E2%80%98').replace(/%26%238221%3B/g, '%E2%80%99')
+            const encName = encodeURIComponent(name)
+            return encText + ' —' + encName
         },
         preload (imageUrl) {
             const image = document.createElement('img')
@@ -72,7 +77,9 @@ export default {
             return this.photos[this.photoIndex] && this.photos[this.photoIndex].urls.full
         },
         tweetUrl () {
-
+            const text = this.currentQuote.content.replace('<p>', '“').replace('</p>', '”')
+            const name = this.currentQuote.title
+            return this.TWEET_BASE_URL + this.encodeQuote(text, name)
         }
     }
 }
