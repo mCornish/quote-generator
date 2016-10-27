@@ -5,6 +5,7 @@
             :tweet-url="tweetUrl"
             :next-quote="nextQuote"
             :next-photo="nextPhoto"
+            :image-url="currentPhoto"
         ></generator>
         <background :image-url="currentPhoto"></background>
     </div>
@@ -23,8 +24,9 @@ export default {
         const QUOTES_URL = `http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=${QUOTE_COUNT}`
         const UNSPLASH_ID = '514ddf55c64189cee554ae4015dce60d3c6806da6098ee7628b27d8f3108206f'
         const UNSPLASH_QUERY = 'design'
+        const UNSPLASH_ORIENT = 'landscape'
         const UNSPLASH_COUNT = 20
-        const UNSPLASH_URL = `https://api.unsplash.com/photos/random?query=${UNSPLASH_QUERY}&count=${UNSPLASH_COUNT}&client_id=${UNSPLASH_ID}`
+        const UNSPLASH_URL = `https://api.unsplash.com/photos/random?query=${UNSPLASH_QUERY}&oreintation=${UNSPLASH_ORIENT}&count=${UNSPLASH_COUNT}&client_id=${UNSPLASH_ID}`
         this.TWEET_BASE_URL = 'https://twitter.com/intent/tweet?text='
 
         // Get background images
@@ -77,21 +79,27 @@ export default {
             return this.photos[this.photoIndex] && this.photos[this.photoIndex].urls.full
         },
         tweetUrl () {
-            const text = this.currentQuote.content.replace('<p>', '“').replace('</p>', '”')
-            const name = this.currentQuote.title
-            return this.TWEET_BASE_URL + this.encodeQuote(text, name)
+            const text = this.currentQuote && this.currentQuote.content.replace('<p>', '“').replace('</p>', '”').replace('  ', '')
+            const name = this.currentQuote && this.currentQuote.title
+            return this.text && this.name && this.TWEET_BASE_URL + this.encodeQuote(text, name)
         }
     }
 }
 </script>
 
-<style>
-.app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-}
+<style lang="sass">
+body
+    margin: 0
+
+.app
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 100vw
+    height: 100vh
+    font-family: 'Avenir', Helvetica, Arial, sans-serif
+    -webkit-font-smoothing: antialiased
+    -moz-osx-font-smoothing: grayscale
+    text-align: center
+    color: #2c3e50
 </style>
