@@ -1,7 +1,7 @@
 <template>
     <div class="quote">
         <div class="quote__text" v-html="quoteText"></div>
-        <div class="quote__name" v-html="quoteTitle"></div>
+        <div class="quote__name">— {{quoteTitle}}</div>
     </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
             return this.quote && this.quote.content
         },
         quoteTitle () {
-            return this.quote && '— ' + this.quote.title
+            return this.quote && this.quote.title
         }
     }
 }

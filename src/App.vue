@@ -18,7 +18,8 @@ import Quote from './components/Quote'
 export default {
     name: 'app',
     created () {
-        const QUOTES_URL = 'http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=30'
+        const QUOTE_COUNT = 20
+        const QUOTES_URL = `http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=${QUOTE_COUNT}`
         const UNSPLASH_ID = '514ddf55c64189cee554ae4015dce60d3c6806da6098ee7628b27d8f3108206f'
         const UNSPLASH_QUERY = 'design'
         const UNSPLASH_COUNT = 20
@@ -48,13 +49,19 @@ export default {
     },
     methods: {
         nextQuote () {
-            this.quoteIndex += 1
+            this.quoteIndex < this.quotes.length - 1 ? this.quoteIndex += 1 : this.quoteIndex = 0
         },
         nextPhoto () {
-            this.photoIndex += 1
+            this.photoIndex < this.photos.length - 1 ? this.photoIndex += 1 : this.photoIndex = 0
+            const nextUrl = this.photos[this.photoIndex + 1].urls.full
+            this.preload(nextUrl)
         },
         encodeQuote (quote) {
 
+        },
+        preload (imageUrl) {
+            const image = document.createElement('img')
+            image.src = imageUrl
         }
     },
     computed: {
