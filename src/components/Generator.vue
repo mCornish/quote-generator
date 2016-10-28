@@ -63,4 +63,5 @@ export default {
     height: 130%
     transform: translate(-15%, -15%)
     z-index: -1
+    transition: background-image .5s
 </style>

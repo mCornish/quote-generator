@@ -5,9 +5,13 @@
             :tweet-url="tweetUrl"
             :next-quote="nextQuote"
             :next-photo="nextPhoto"
-            :image-url="currentPhoto"
+            :image-url="currentPhotoSmall"
         ></generator>
-        <background :image-url="currentPhoto"></background>
+        <background 
+            :image-url="currentPhoto"
+            :small-image-url="currentPhotoSmall"
+            :image-loaded="imageLoaded"
+        ></background>
     </div>
 </template>
 
@@ -47,7 +51,8 @@ export default {
             quotes: [],
             quoteIndex: 0,
             photos: [],
-            photoIndex: 0
+            photoIndex: 0,
+            imageLoaded: false
         }
     },
     methods: {
@@ -55,9 +60,11 @@ export default {
             this.quoteIndex < this.quotes.length - 1 ? this.quoteIndex += 1 : this.quoteIndex = 0
         },
         nextPhoto () {
-            this.photoIndex < this.photos.length - 1 ? this.photoIndex += 1 : this.photoIndex = 0
-            const nextUrl = this.photos[this.photoIndex + 1].urls.full
-            this.preload(nextUrl)
+            this.imageLoaded = false
+            const nextIndex = this.photoIndex < this.photos.length - 1 ? this.photoIndex + 1 : 0
+            setTimeout(() => {
+                this.photoIndex = nextIndex
+            }, 1000)
         },
         encodeQuote (text, name) {
             // Truncate text if it's too long for the tweet
@@ -69,6 +76,13 @@ export default {
         preload (imageUrl) {
             const image = document.createElement('img')
             image.src = imageUrl
+        },
+        detectLoad (imageUrl) {
+            const img = document.createElement('img')
+            img.src = imageUrl
+            img.onload = () => {
+                this.imageLoaded = true
+            }
         }
     },
     computed: {
@@ -76,7 +90,13 @@ export default {
             return this.quotes[this.quoteIndex] && this.quotes[this.quoteIndex]
         },
         currentPhoto () {
-            return this.photos[this.photoIndex] && this.photos[this.photoIndex].urls.full
+            this.imageLoaded = false
+            const imageUrl = this.photos[this.photoIndex] && this.photos[this.photoIndex].urls.full
+            this.detectLoad(imageUrl)
+            return imageUrl
+        },
+        currentPhotoSmall () {
+            return this.photos[this.photoIndex] && this.photos[this.photoIndex].urls.small
         },
         tweetUrl () {
             const text = this.currentQuote && this.currentQuote.content.replace('<p>', '“').replace('</p>', '”').replace('  ', '')
