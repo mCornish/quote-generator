@@ -12,6 +12,7 @@
             :small-image-url="currentPhotoSmall"
             :image-loaded="imageLoaded"
         ></background>
+        <icon-footer repoUrl="https://github.com/mCornish/quote-generator"></icon-footer>
     </div>
 </template>
 
@@ -20,6 +21,7 @@ import $ from 'jquery'
 import Generator from './components/Generator'
 import Background from './components/Background'
 import Quote from './components/Quote'
+import IconFooter from './components/Footer'
 
 export default {
     name: 'app',
@@ -43,8 +45,9 @@ export default {
     },
     components: {
         Generator,
+        Quote,
         Background,
-        Quote
+        IconFooter
     },
     data () {
         return {
