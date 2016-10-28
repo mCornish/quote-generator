@@ -6,6 +6,7 @@
             :next-quote="nextQuote"
             :next-photo="nextPhoto"
             :image-url="currentPhotoSmall"
+            :image-loaded="imageLoaded"
         ></generator>
         <background 
             :image-url="currentPhoto"
@@ -30,9 +31,8 @@ export default {
         const QUOTES_URL = `http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=${QUOTE_COUNT}`
         const UNSPLASH_ID = '514ddf55c64189cee554ae4015dce60d3c6806da6098ee7628b27d8f3108206f'
         const UNSPLASH_QUERY = 'design'
-        const UNSPLASH_ORIENT = 'landscape'
         const UNSPLASH_COUNT = 20
-        const UNSPLASH_URL = `https://api.unsplash.com/photos/random?query=${UNSPLASH_QUERY}&oreintation=${UNSPLASH_ORIENT}&count=${UNSPLASH_COUNT}&client_id=${UNSPLASH_ID}`
+        const UNSPLASH_URL = `https://api.unsplash.com/photos/random?query=${UNSPLASH_QUERY}&count=${UNSPLASH_COUNT}&client_id=${UNSPLASH_ID}`
         this.TWEET_BASE_URL = 'https://twitter.com/intent/tweet?text='
 
         // Get background images
@@ -104,15 +104,18 @@ export default {
         tweetUrl () {
             const text = this.currentQuote && this.currentQuote.content.replace('<p>', '“').replace('</p>', '”').replace('  ', '')
             const name = this.currentQuote && this.currentQuote.title
-            return this.text && this.name && this.TWEET_BASE_URL + this.encodeQuote(text, name)
+            return text && name && this.TWEET_BASE_URL + this.encodeQuote(text, name)
         }
     }
 }
 </script>
 
 <style lang="sass">
+$color-text: hsla(0,0,100,.7)
+
 body
     margin: 0
+    color: $color-text
 
 .app
     display: flex
@@ -124,5 +127,25 @@ body
     -webkit-font-smoothing: antialiased
     -moz-osx-font-smoothing: grayscale
     text-align: center
-    color: #2c3e50
+    color: inherit
+
+button,
+a[role=button]
+    background-color: transparent
+    border: none
+    color: $color-text
+    cursor: pointer
+    font-size: 1.2em
+    text-decoration: none
+    font-weight: bold
+    text-transform: uppercase
+    padding: 1em
+    transition: background-color .2s
+
+button:hover,
+button:focus,
+a[role=button]:hover,
+a[role=button]:focus
+    background-color: hsla(0,0,0,.5)
+    outline: none
 </style>

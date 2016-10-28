@@ -31,16 +31,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
-$color-fill: rgba(0,90,170, .5)
-$color-hover: rgba(0,90,170, .8)
+$color-fill: hsla(0,0,100,.5)
+$color-hover: rgba(57,154,234,.8)
 
 footer 
     position: absolute
     bottom: 0
     left: 0
-    width: calc(100vw - 6em)
+    width: calc(100vw - 4em)
     text-align: left
-    padding: 2em
+    padding: 3em 2em 1em
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,.5) 70%,rgba(0,0,0,.5) 100%);
 
 .logo
     fill: $color-fill

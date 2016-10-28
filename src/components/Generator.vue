@@ -2,8 +2,12 @@
     <div class="generator">
         <div class="generator__back" :style="styleString"></div>
         <quote :quote="quoteObj"></quote>
-        <a role="button" class="--tweet" :href="tweetUrl" target="_blank">Tweet</a>
-        <button @click="next">New Quote</button>
+        <transition name="fade">
+            <div v-show="imageLoaded" class="generator__buttons">
+                <button @click="next">New Quote</button>
+                <a role="button" class="--tweet" :href="tweetUrl" target="_blank">Tweet</a>
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -17,7 +21,8 @@ export default {
         tweetUrl: String,
         nextQuote: Function,
         nextPhoto: Function,
-        imageUrl: String
+        imageUrl: String,
+        imageLoaded: Boolean
     },
     components: {
         Quote
@@ -49,7 +54,7 @@ export default {
     position: relative
     width: 50vw
     height: 30vh
-    color: hsla(0,0,100,.7)
+    color: inherit
     overflow: hidden
     z-index: 3
 
@@ -64,4 +69,25 @@ export default {
     transform: translate(-15%, -15%)
     z-index: -1
     transition: background-image .5s
+
+.generator__buttons
+    position: absolute
+    bottom: 0
+    left: 0
+    display: flex
+    justify-content: flex-end
+    padding: 2em
+    width: calc(100% - 4em)
+
+    button:first-child,
+    [role=button]:first-Child
+        margin-right: auto
+
+.fade-enter-active,
+.fade-leave-active
+    transition: opacity .5s
+
+.fade-enter,
+.fade-leave-active
+    opacity: 0
 </style>

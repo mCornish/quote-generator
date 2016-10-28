@@ -13,7 +13,7 @@ export default {
     },
     computed: {
         quoteText () {
-            return this.quote && this.quote.content
+            return this.quote && this.quote.content.replace('<p>', '“').replace('</p>', '”')
         },
         quoteTitle () {
             return this.quote && '— ' + this.quote.title
@@ -23,12 +23,20 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.quote {
+<style scoped lang="sass">
+.quote
     width: 50%
-}
+    max-height: 70%
+    line-height: 1.7
+    text-align: left
+    overflow: scroll
 
-.quote__name {
+.quote span
+    font-size: 2em
+
+.quote__name
     text-align: right
-}
+    font-size: 2em
+    font-weight: bold
+    font-style: italic
 </style>
