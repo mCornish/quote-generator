@@ -28,7 +28,7 @@ export default {
     name: 'app',
     created () {
         const QUOTE_COUNT = 20
-        const QUOTES_URL = `http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=${QUOTE_COUNT}`
+        const QUOTES_URL = `https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=${QUOTE_COUNT}`
         const UNSPLASH_ID = '514ddf55c64189cee554ae4015dce60d3c6806da6098ee7628b27d8f3108206f'
         const UNSPLASH_QUERY = 'design'
         const UNSPLASH_COUNT = 20
