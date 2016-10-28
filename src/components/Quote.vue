@@ -25,6 +25,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .quote {
+    width: 50%
+}
 
+.quote__name {
+    text-align: right
 }
 </style>
