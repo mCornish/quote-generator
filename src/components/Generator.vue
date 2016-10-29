@@ -27,6 +27,10 @@ export default {
             this.elHeight = this.$el.clientHeight
         })
     },
+    mounted () {
+        this.elWidth = this.$el.clientWidth
+        this.elHeight = this.$el.clientHeight
+    },
     props: {
         quoteObj: Object,
         tweetUrl: String,
