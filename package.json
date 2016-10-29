@@ -18,7 +18,8 @@
     "node-sass": "^3.10.1",
     "node-vibrant": "^2.1.2",
     "sass-loader": "^4.0.2",
-    "vue": "^2.0.1"
+    "vue": "^2.0.1",
+    "window-watcher": "^1.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
