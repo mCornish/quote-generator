@@ -7,6 +7,7 @@
             :next-photo="nextPhoto"
             :image-url="currentPhotoSmall"
             :image-loaded="imageLoaded"
+            :image-dimensions="currentPhotoDimensions"
         ></generator>
         <background 
             :image-url="currentPhoto"
@@ -100,6 +101,12 @@ export default {
         },
         currentPhotoSmall () {
             return this.photos[this.photoIndex] && this.photos[this.photoIndex].urls.small
+        },
+        currentPhotoDimensions () {
+            return {
+                width: this.photos[this.photoIndex] && this.photos[this.photoIndex].width,
+                height: this.photos[this.photoIndex] && this.photos[this.photoIndex].height
+            }
         },
         tweetUrl () {
             const text = this.currentQuote && this.currentQuote.content.replace('<p>', '“').replace('</p>', '”').replace('  ', '')

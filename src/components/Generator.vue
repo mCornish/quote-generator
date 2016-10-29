@@ -13,19 +13,37 @@
 
 <script>
 import Quote from './Quote'
+import ww from 'window-watcher'
 
 export default {
     name: 'generator',
+    created () {
+        this.transformString = (width, height) => {
+            return `transform: translate(calc(-1 * ((100vw / 2) - ${width / 2}px)), calc(-1 * ((100vh / 2) - ${height / 2}px)));`
+        }
+
+        ww.on('resize', () => {
+            this.elWidth = this.$el.clientWidth
+            this.elHeight = this.$el.clientHeight
+        })
+    },
     props: {
         quoteObj: Object,
         tweetUrl: String,
         nextQuote: Function,
         nextPhoto: Function,
         imageUrl: String,
-        imageLoaded: Boolean
+        imageLoaded: Boolean,
+        imageDimensions: Object
     },
     components: {
         Quote
+    },
+    data () {
+        return {
+            elWidth: this.$el && this.$el.clientWidth,
+            elHeight: this.$el && this.$el.clientHeight
+        }
     },
     methods: {
         next () {
@@ -35,10 +53,9 @@ export default {
     },
     computed: {
         styleString () {
-            const $background = document.querySelector('.background')
-            const imageWidth = $background && $background.clientWidth
-            const imageHeight = $background && $background.clientHeight
-            return `background-image: url('${this.imageUrl}'); background-size: ${imageWidth}px ${imageHeight}px;`
+            const imageString = `background-image: url('${this.imageUrl}');`
+
+            return this.transformString && imageString + this.transformString(this.elWidth, this.elHeight)
         }
     }
 }
@@ -62,11 +79,11 @@ export default {
     position: absolute
     top: 0
     left: 0
+    background-size: cover
     background-position: center
     filter: blur(30px) brightness(60%)
-    width: 130%
-    height: 130%
-    transform: translate(-15%, -15%)
+    width: 100vw
+    height: 100vh
     z-index: -1
     transition: background-image .5s
 
